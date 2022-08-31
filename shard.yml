@@ -1,0 +1,6 @@
+---
+name: rock
+version: 0.0.1
+dependencies:
+  dynany:
+    github: j8r/dynany
