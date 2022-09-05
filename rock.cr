@@ -1,5 +1,6 @@
 # Kjartan Rex (github.com/kjarex)
 
+require "symbolx"
 require "http/client"
 require "uri"
 require "yaml"
@@ -128,12 +129,12 @@ def remove (name)
   save
 end
 
-case ARGV.shift?
-when "add"
+case (ARGV.shift?||"").to_sym
+when :add
   addProcedure ARGV.shift? #TODO all of them if more than one given (but then the check should be adjust)
 #when "install"
 #  todo
-when "remove"
+when :remove
   help if ARGV.empty?
   remove ARGV.shift? #TODO all of them if more than one given
 #when "uninstall"
@@ -146,13 +147,13 @@ when :open
     `open https://github.com/#{r}`
   {% else %}    
     (puts "\nThis feature is only available on OSX. Sorry."; exit 1) 
-  {% end %}
-when "search"
+  {% end %}    
+when :search
   help if ARGV.empty?
   searchProcedure ARGV.join " "
-when "version"
+when :version
   puts VERSION
-when "help"
+when :help
   help 0
 else
   help    
