@@ -109,6 +109,7 @@ def help (i=1)
     rock help                   to get this help text
     rock version                to see rock's version
     rock search #{"something".colorize(:yellow)}       to search for #{"something".colorize(:yellow)} on shardbox.org
+    rock open #{"shard".colorize(:green)}             to open #{"shard".colorize(:green)}'s github page #{"(OSX only)".colorize(:yellow)}
     rock add #{"shard".colorize(:green)}              to add #{"shard".colorize(:green)} to your dependencies
     rock remove #{"shard".colorize(:green)}           not implemented yet - to remove #{"shard".colorize(:green)} from your dependencies"
 #    rock install #{"shard".colorize(:green)}          to install #{"shard".colorize(:green)}
@@ -137,6 +138,15 @@ when "remove"
   remove ARGV.shift? #TODO all of them if more than one given
 #when "uninstall"
 #  todo
+when :open
+  {% if flag?(:macosx) %}   
+    r= searchShard ARGV.shift?
+    puts "and found it. "
+    puts "Opening it in your browser right now…"
+    `open https://github.com/#{r}`
+  {% else %}    
+    (puts "\nThis feature is only available on OSX. Sorry."; exit 1) 
+  {% end %}
 when "search"
   help if ARGV.empty?
   searchProcedure ARGV.join " "
